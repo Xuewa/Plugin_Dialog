@@ -2,12 +2,15 @@
  * Widget类高度抽象
  * by Xuewa 2016-09-11
  */
-define(["jquery"],function(w,$){
+define(["jquery"],function($){
 	function Widget(){
 		this.DialogBox=null;
 	}
 
 	Widget.prototype={
+		extend:function(config){
+			this.config=$.extend({},config);
+		},
 		//绑定事件
 		on:function(type,handler){
 			if(typeof this.handlers[type]=='undefined'){
@@ -18,12 +21,19 @@ define(["jquery"],function(w,$){
 		},
 		//触发事件
 		fire:function(type,data){
-
+			if(typeof this.handlers[type]=='undefined'
+				||this.handlers[type].length==0){
+				return;
+			};
+			if(this.handlers[type] instanceof Array)
+				for (var i = 0;i<=this.handlers[type].length - 1;i++) {
+					this.handlers[type][i](data);
+				};
 		},
 		render:function(){
 			this.renderUI();
 			this.handlers={};
-			this.initUI();
+			// this.initUI();
 			this.bindUI();
 		},
 		//删除插件
@@ -33,7 +43,7 @@ define(["jquery"],function(w,$){
 		renderUI:function(){},
 		bindUI:function(){},
 		destructor:function(){},
-		initUI:function(){}
+		// initUI:function(){}
 	};
 
 	//返回是对象

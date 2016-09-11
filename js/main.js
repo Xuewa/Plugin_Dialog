@@ -20,7 +20,7 @@ require(["jquery","Dialog"], function($,d) {
 				type:"left",
 				text:"取消",
 				callBack:function(){
-
+					console.log('cancel!!');
 				}
 			},{
 				type:"right",
@@ -30,9 +30,9 @@ require(["jquery","Dialog"], function($,d) {
 				}
 			}
 		]
-	}).renderUI().on('alert',function(){
+	}).render();/*.on('alert',function(){
 		alert('on function');
-	});
+	});*/
 
 
 });

@@ -39,7 +39,19 @@ define(["Widget","jquery"],function(w,$){
 			if(this.outer_buttons) this.win.append(this.outer_buttons);
 			$('body').append(this.container);
 			// alert(this.container.attr('class'));
-		}
+		},
+		bindUI:function(){
+			if(this.config.buttons!=null){
+				for (var i =0;i<= buttons.length - 1;i++) {
+					//btn绑定事件
+					var btn=buttons[i];
+					if(btn.callBack!=null){
+						this.container.delegate('.'+buttons[i].type+'_btn',
+							'click',btn.callBack);
+					}
+				}
+			}
+		},
 	});
 
 return {Dialog:Dialog};
