@@ -3,13 +3,15 @@
  * by Xuewa 2016-09-11
  */
 define(["jquery"],function($){
-	function Widget(){
-		this.DialogBox=null;
+	function Widget(config){
+		this.config=null;
+		this.container=null;
+		this.extend(config);
 	}
 
 	Widget.prototype={
 		extend:function(config){
-			this.config=$.extend({},config);
+			this.config=$.extend(this.config,config);
 		},
 		//绑定事件
 		on:function(type,handler){
@@ -33,8 +35,15 @@ define(["jquery"],function($){
 		render:function(){
 			this.renderUI();
 			this.handlers={};
-			// this.initUI();
 			this.bindUI();
+			//先注册好show和hide方法
+			this.on('show',function(){
+				this.container.show();
+			});
+			this.on('hide',function(){
+				this.container.hide();
+			});
+			return this;
 		},
 		//删除插件
 		destroy:function(){
@@ -43,7 +52,6 @@ define(["jquery"],function($){
 		renderUI:function(){},
 		bindUI:function(){},
 		destructor:function(){},
-		// initUI:function(){}
 	};
 
 	//返回是对象

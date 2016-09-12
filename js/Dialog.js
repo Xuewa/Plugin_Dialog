@@ -6,11 +6,9 @@ define(["Widget","jquery"],function(w,$){
 			text:"加载中...",
 			buttons:null
 		}
+		this.extend(config);
 	};
-		//扩展cofig
-		// this.config=$.extend(this.config,config);
-		// console.log(this.config);
-
+		
 	Dialog.prototype=$.extend({},new w.Widget(),{
 		renderUI:function(){
 			this.container=$("<div class='dialog_container'></div>")
@@ -41,12 +39,13 @@ define(["Widget","jquery"],function(w,$){
 			// alert(this.container.attr('class'));
 		},
 		bindUI:function(){
+			var that=this;
 			if(this.config.buttons!=null){
-				for (var i =0;i<= buttons.length - 1;i++) {
+				for (var i =0;i<=this.config.buttons.length - 1;i++) {
 					//btn绑定事件
-					var btn=buttons[i];
+					var btn=this.config.buttons[i];
 					if(btn.callBack!=null){
-						this.container.delegate('.'+buttons[i].type+'_btn',
+						this.container.delegate('.'+this.config.buttons[i].type+'_btn',
 							'click',btn.callBack);
 					}
 				}
