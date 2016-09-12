@@ -3,13 +3,14 @@
  * by Xuewa 2016-09-11
  */
 define(["jquery"],function($){
-	function Widget(){
+	function Widget(config){
 		this.DialogBox=null;
 	}
 
 	Widget.prototype={
+		//扩展参数
 		extend:function(config){
-			this.config=$.extend({},config);
+			this.config=$.extend(this.config,config);
 		},
 		//绑定事件
 		on:function(type,handler){
@@ -17,7 +18,7 @@ define(["jquery"],function($){
 				this.handlers[type]=[];
 			}
 			this.handlers[type].push(handler);
-			// alert('on function');
+			return this;
 		},
 		//触发事件
 		fire:function(type,data){
@@ -35,6 +36,7 @@ define(["jquery"],function($){
 			this.handlers={};
 			// this.initUI();
 			this.bindUI();
+			return this;
 		},
 		//删除插件
 		destroy:function(){
