@@ -13,16 +13,16 @@ require(["jquery","Dialog"], function($,d) {
    // testing引入jq
    // console.log("jquery!");
    
-	var dia=new d.Dialog({
+	var dialog=new d.Dialog({
 		type:"ques",
 		text:"你确定下单吗？",
 		buttons:[
 			{
 				type:"left",
 				text:"取消",
-				callBack:function(){
-					console.log('cancel!!');
-					this.fire('hide');
+				callBack:function(that){
+					// console.log(that);
+					// that.fire('hide');
 				}
 			},{
 				type:"right",
@@ -37,7 +37,5 @@ require(["jquery","Dialog"], function($,d) {
 	}).on('hide',function(){
 		this.container.hide();
 	});
-
-	// var dia=new d.Dialog().render();
 
 });

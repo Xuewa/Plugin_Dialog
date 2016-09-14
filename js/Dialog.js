@@ -41,12 +41,13 @@ define(["Widget","jquery"],function(w,$){
 		},
 		//为dialog中的元素绑定事件
 		bindUI:function(){
+			var that=this;
 			if(this.config.buttons!=null){
-				for (var i =0;i<= this.config.buttons.length - 1;i++) {
+				for (var i =0;i<=this.config.buttons.length - 1;i++) {
 					//btn绑定事件
 					var btn=this.config.buttons[i];
 					if(btn.callBack!=null){
-						this.container.delegate('.'+btn.type+'_btn',
+						this.container.delegate('.'+this.config.buttons[i].type+'_btn',
 							'click',btn.callBack);
 					}
 				}

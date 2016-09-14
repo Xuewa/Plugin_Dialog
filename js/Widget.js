@@ -4,7 +4,9 @@
  */
 define(["jquery"],function($){
 	function Widget(config){
-		this.DialogBox=null;
+		this.config=null;
+		this.container=null;
+		this.extend(config);
 	}
 
 	Widget.prototype={
@@ -35,6 +37,13 @@ define(["jquery"],function($){
 			this.renderUI();
 			this.handlers={};
 			this.bindUI();
+			//先注册好show和hide方法
+			this.on('show',function(){
+				this.container.show();
+			});
+			this.on('hide',function(){
+				this.container.hide();
+			});
 			return this;
 		},
 		//删除插件
