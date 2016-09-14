@@ -1,0 +1,22 @@
+ul li{
+	list-style: none;
+}
+.carousel_container{
+	width: 100%;
+	position: relative;
+	height: 16em;
+}
+.carousel_btn{
+	display: inline-block;
+	/*z-index: 10;*/
+	background-color: #111;
+	width: 10%;
+	position: absolute;
+	height: 100%;
+}
+.carousel_list{
+
+}
+.carousel_item{
+
+}

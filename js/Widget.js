@@ -34,7 +34,6 @@ define(["jquery"],function($){
 		render:function(){
 			this.renderUI();
 			this.handlers={};
-			// this.initUI();
 			this.bindUI();
 			return this;
 		},
@@ -45,7 +44,6 @@ define(["jquery"],function($){
 		renderUI:function(){},
 		bindUI:function(){},
 		destructor:function(){},
-		// initUI:function(){}
 	};
 
 	//返回是对象
