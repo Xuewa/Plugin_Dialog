@@ -12,7 +12,7 @@ ul li{
 }
 .carousel_btn{
 	display: inline-block;
-	/*z-index: 10;*/
+	z-index: 10;
 	background-color: #111;
 	width: 10%;
 	position: absolute;
@@ -55,11 +55,11 @@ ul li{
 	-webkit-transform:rotate(45deg);
 }
 .carousel_pics{
-
+	/*text-align: center;*/
 }
 .carousel_list{
 
 }
 .carousel_item{
-
+	position: absolute;
 }
