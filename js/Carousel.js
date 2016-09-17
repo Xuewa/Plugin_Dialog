@@ -24,10 +24,8 @@ define(["Widget","jquery"],function(w,$){
 				for (var i =0;i<= this.config.pics.length - 1; i++) {
 					var pic=this.config.pics[i];
 					imgW=imgW*0.9;
-					var pic_item=$("<li class='carousel_item'"+
-						" style='z-index:"+(5-i)+";left:"+(100/4*i)+"%'>"+
-						"<a href='#'><img id='img"+i+"' src='"+pic+"' "+ 
-						"style='width:"+imgW+"%;height:"+imgW+"%;opacity:"+(imgW*0.8/100)+"'/></a></li>");
+					var pic_item=$("<li class='carousel_item'>"+
+						"<a href='#'><img id='img"+i+"' src='"+pic+"'/></a></li>");
 					this.pic_list.append(pic_item);
 				}
 			}
@@ -39,14 +37,39 @@ define(["Widget","jquery"],function(w,$){
 		},
 		//为Carousel中的元素绑定事件
 		bindUI:function(){
-			this.container.delegate('.prev_btn','click',this.showPic(picNum-1));
-			this.container.delegate('.next_btn','click',this.showPic(picNum+1));
+			// this.container.delegate('.prev_btn','click',this.showPic(picNum-1));
+			// this.container.delegate('.next_btn','click',this.showPic(picNum+1));
 		},
-		showPic:function(picNum){
-			var imgDom=$('#img'+picNum);
+		showPic:function(/*picNum*/){
+			// var imgDom=$('#img'+picNum);
 			var half=Math.ceil(this.config.pics.length/2);
 			for (var i =0;i<=this.config.pics.length - 1;i++) {
-				// var flagNum=
+				// var flagNum=(i+picNum)%half;
+				var flagNum=(i)%half;
+				// console.log(flagNum);
+				// var listy='z-index:'+flagNum+';left:'+;
+				var imgW=Math.pow(0.9,(half-flagNum))*100;
+				// var imgsty='width:'+imgW+'%;height:'+imgW+'%;opacity:'+Math.pow(0.9,(half-flagNum))+';';
+				$('#img'+i).parent().parent().
+				css({'zIndex':flagNum,
+				});
+				console.log(Math.floor(i/half));
+				if(Math.floor(i/half)==0){
+					$('#img'+i).parent().parent().
+					css({
+						 'left':(25/half*flagNum)+'%'
+					});
+				}else if(Math.floor(i/half)==1){
+					$('#img'+i).parent().parent().
+					css({
+						 'right':(45/half*flagNum)+'%'
+					});
+				}
+				$('#img'+i).css({
+					'width':imgW+'%',
+					'height':imgW+'%',
+					'opacity':Math.pow(0.9,(half-flagNum))
+				});
 			}
 		}
 		
