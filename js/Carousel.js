@@ -15,10 +15,19 @@ define(["Widget","jquery"],function(w,$){
 			this.next_btn=$("<div class='carousel_btn next_btn'><span class='next_icon'></span></div>");
 			this.pics=$("<div class='carousel_pics'></div>");
 			this.pic_list=$("<ul class='carousel_list'></ul>");
+			//渲染li元素的位置
+			if(this.config.pics.length%2==0){
+				this.config.pics.push(this.config.pics[0]);
+			}
 			if(this.config.pics.length>0){
+				var imgW=100;
 				for (var i =0;i<= this.config.pics.length - 1; i++) {
 					var pic=this.config.pics[i];
-					var pic_item=$("<li class='carousel_item'><a href='#'><img src='"+pic+"'/></a></li>");
+					imgW=imgW*0.9;
+					var pic_item=$("<li class='carousel_item'"+
+						" style='z-index:"+(5-i)+";left:"+(100/4*i)+"%'>"+
+						"<a href='#'><img id='img"+i+"' src='"+pic+"' "+ 
+						"style='width:"+imgW+"%;height:"+imgW+"%;opacity:"+(imgW*0.8/100)+"'/></a></li>");
 					this.pic_list.append(pic_item);
 				}
 			}
@@ -30,23 +39,17 @@ define(["Widget","jquery"],function(w,$){
 		},
 		//为Carousel中的元素绑定事件
 		bindUI:function(){
-			if(this.config.buttons!=null){
-				for (var i =0;i<= this.config.buttons.length - 1;i++) {
-					//btn绑定事件
-					var btn=this.config.buttons[i];
-					if(btn.callBack!=null){
-						this.container.delegate('.'+btn.type+'_btn',
-							'click',btn.callBack);
-					}
-				}
+			this.container.delegate('.prev_btn','click',this.showPic(picNum-1));
+			this.container.delegate('.next_btn','click',this.showPic(picNum+1));
+		},
+		showPic:function(picNum){
+			var imgDom=$('#img'+picNum);
+			var half=Math.ceil(this.config.pics.length/2);
+			for (var i =0;i<=this.config.pics.length - 1;i++) {
+				// var flagNum=
 			}
-		},
-		show:function(){
-			this.fire('show');
-		},
-		hide:function(){
-			this.fire('show');
 		}
+		
 	});
 
 return {Carousel:Carousel};
