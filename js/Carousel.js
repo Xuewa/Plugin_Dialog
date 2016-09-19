@@ -57,7 +57,8 @@ define(["Widget","jquery"],function(w,$){
 				if(Math.floor(i/half)==0){
 					$('#img'+i).parent().parent().
 					css({
-						 'left':(25/half*flagNum)+'%'
+						 'left':(25/half*flagNum)+'%',
+						 'display':'none',
 					});
 				}else if(Math.floor(i/half)==1){
 					$('#img'+i).parent().parent().
