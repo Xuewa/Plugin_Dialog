@@ -35,6 +35,52 @@ define(["Widget","jquery"],function(w,$){
 			this.pics.append(this.pic_list);
 			this.container.append(this.pics);
 			$("body").append(this.container);
+			this.renderAllCss();
+		},
+		//固定每个位置的样式
+		renderAllCss:function(){
+			this.half=Math.ceil(this.config.pics.length/2);
+			this.styleList=[];
+			for (var i=0;i<= this.config.pics.length-1;i++){
+				var imgaStyle;
+				var imgW=Math.pow(0.8,(this.half-i-1))*64;
+				var imgH=Math.pow(0.8,(this.half-i-1))*100;
+				if(i<this.half-1){
+					imgaStyle={
+						'zIndex':i,
+						'left':(18/(this.half-1)*i)+'%',
+						'top':(100-imgH)+'%',
+						'width':imgW+'%',
+						'height':imgH+'%',
+						'opacity':Math.pow(0.6,(this.half-i-1)),
+					};
+				}else if(i==(this.half-1)){
+					imgaStyle={
+						'zIndex':i,
+						'left':'18%',
+						'width':imgW+'%',
+						'height':imgH+'%',
+						'opacity':Math.pow(0.6,(this.half-i-1)),
+					};
+				}else{
+					//右半边的位置标识
+					var flagNum=this.half-2-(i%(this.half));
+					var right=18/(this.half-1)*flagNum;
+					imgW=Math.pow(0.6,(this.half-1-flagNum))*64;
+					imgH=Math.pow(0.8,(this.half-1-flagNum))*100;
+					console.log(i+'----'+right);
+					imgaStyle={
+						'zIndex':flagNum,
+						'left':(100-imgW-right)+'%',
+						'top':(100-imgH)+'%',
+						'width':imgW+'%',
+						'height':imgH+'%',
+						'opacity':Math.pow(0.6,(this.half-1-flagNum)),
+					};
+				}
+				this.styleList[i]=imgaStyle;
+			};	
+			// console.log(this.styleList);
 		},
 		//为Carousel中的元素绑定事件
 		bindUI:function(){
@@ -42,44 +88,11 @@ define(["Widget","jquery"],function(w,$){
 			// this.container.delegate('.next_btn','click',this.showPic(picNum+1));
 		},
 		showPic:function(picNum){
-			var half=Math.ceil(this.config.pics.length/2);
 			picNum=picNum%this.config.pics.length;
-			console.log(picNum);				
-			for (var i =0;i<=this.config.pics.length - 1;i++) {
-				var flagNum=(i+picNum)%(this.config.pics.length)%half;		
-				console.log(flagNum);				
-				var imgW=Math.pow(0.8,(half-flagNum-1))*64;
-				var imgH=Math.pow(0.8,(half-flagNum-1))*100;
-				$('#imgA'+i).css({
-					'zIndex':flagNum,
-				});
-				// console.log(Math.floor(i/half));
-				if(i<half-1){
-					$('#imgA'+i).css({
-						 'left':(18/(half-1)*flagNum)+'%',
-						 'top':(100-imgH)+'%',
-						 // 'display':'none',
-					});
-				}else if(i==half-1){
-					$('#imgA'+i).css({
-						'left':'18%',
-					// 'top'
-					});
-				}else if(i>half-1){
-					var right=18/(half-1)*flagNum;
-					console.log(i+'----'+right);
-					$('#imgA'+i).css({
-						 // 'right':(18/(half-1)*flagNum)+'%',
-						 'left':(100-imgW-right)+'%',
-						 'top':(100-imgH)+'%',
-						 // 'display':'none'
-					});
-				}
-				$('#imgA'+i).css({
-					'width':imgW+'%',
-					'height':imgH+'%',
-					'opacity':Math.pow(0.6,(half-flagNum-1))
-				});
+			// console.log(picNum);		
+			for (var i =0;i<=this.config.pics.length-1;i++){
+				var flagNum=(i+picNum)%this.config.pics.length;
+				$('#imgA'+i).css(this.styleList[flagNum]);
 			}
 		},
 		//停止播放

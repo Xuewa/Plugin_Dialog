@@ -19,6 +19,6 @@ require(["jquery","Carousel"], function($,c) {
 		picWid:640,
 		pics:['images/1.jpg','images/2.jpg','images/3.jpg',
 			  'images/4.jpg','images/5.jpg','images/6.jpg',]
-	}).render().showPic(5);
+	}).render().showPic(4);
 
 });
