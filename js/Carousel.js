@@ -98,20 +98,28 @@ define(["Widget","jquery"],function(w,$){
 			}
 			return this;
 		},
-		// animateBydirection:function(dirFlag){
-
-		// },
-		//自动播放******ing******
-		autoPlay:function(){
+		animateBydirection:function(dirFlag){
 			for (var i =0;i<=this.config.pics.length - 1;i++) {
 				var item=$('#imgA'+i);
 				// console.log(item);
-				if(i<this.config.pics.length-1){
-					console.log(this.styleList[i]+'----'+this.styleList[i+1]);
-					item.animate(this.styleList[i+1],5000);
+				if(dirFlag>0){
+					if(i<this.config.pics.length-1){
+						console.log(this.styleList[i]+'----'+this.styleList[i+1]);
+						item.animate(this.styleList[i+1],500);
+					}
+					else item.animate(this.styleList[0],500);
+				}else if(dirFlag<0){
+					if(i>0){
+						console.log(this.styleList[i]+'---'+this.styleList[i-1]);
+						item.animate(this.styleList[i-1],500);
+					}else item.animate(this.styleList[this.styleList.length-1],500);
 				}
-				else item.animate(this.styleList[0],5000);
 			}
+
+		},
+		//自动播放******ing******
+		autoPlay:function(){
+			setInterval(this.animateBydirection(1),100);
 		}
 		
 	});
