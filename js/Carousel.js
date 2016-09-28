@@ -58,6 +58,7 @@ define(["Widget","jquery"],function(w,$){
 					imgaStyle={
 						'zIndex':i,
 						'left':'18%',
+						'top':(100-imgH)+'%',
 						'width':imgW+'%',
 						'height':imgH+'%',
 						'opacity':Math.pow(0.6,(this.half-i-1)),
@@ -80,13 +81,14 @@ define(["Widget","jquery"],function(w,$){
 				}
 				this.styleList[i]=imgaStyle;
 			};	
-			// console.log(this.styleList);
+			console.log(this.styleList);
 		},
 		//为Carousel中的元素绑定事件
 		bindUI:function(){
 			// this.container.delegate('.prev_btn','click',this.showPic(picNum-1));
 			// this.container.delegate('.next_btn','click',this.showPic(picNum+1));
 		},
+		//根据偏移量定位css
 		showPic:function(picNum){
 			picNum=picNum%this.config.pics.length;
 			// console.log(picNum);		
@@ -94,10 +96,22 @@ define(["Widget","jquery"],function(w,$){
 				var flagNum=(i+picNum)%this.config.pics.length;
 				$('#imgA'+i).css(this.styleList[flagNum]);
 			}
+			return this;
 		},
-		//停止播放
-		stopAutoPlay:function(){
+		// animateBydirection:function(dirFlag){
 
+		// },
+		//自动播放******ing******
+		autoPlay:function(){
+			for (var i =0;i<=this.config.pics.length - 1;i++) {
+				var item=$('#imgA'+i);
+				// console.log(item);
+				if(i<this.config.pics.length-1){
+					console.log(this.styleList[i]+'----'+this.styleList[i+1]);
+					item.animate(this.styleList[i+1],5000);
+				}
+				else item.animate(this.styleList[0],5000);
+			}
 		}
 		
 	});
