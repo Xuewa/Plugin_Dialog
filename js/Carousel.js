@@ -5,16 +5,17 @@ define(["Widget","jquery"],function(w,$){
 			
 		}
 		this.extend(config);
-		console.log(this.config);
+		// console.log(this.config);
 	};
 		
 	Carousel.prototype=$.extend({},new w.Widget(),{
 		renderUI:function(){
+			animated=true;
 			this.container=$("<div class='carousel_container'></div>");
 			this.prev_btn=$("<div class='carousel_btn prev_btn'><span class='prev_icon'></span></div>");
 			this.next_btn=$("<div class='carousel_btn next_btn'><span class='next_icon'></span></div>");
 			this.pics=$("<div class='carousel_pics'></div>");
-			this.pic_list=$("<ul class='carousel_list'></ul>");
+			this.pic_list=$("<ul class='carousel_list' picnum='0'></ul>");
 			//渲染li元素的位置
 			if(this.config.pics.length%2==0){
 				this.config.pics.push(this.config.pics[0]);
@@ -32,6 +33,8 @@ define(["Widget","jquery"],function(w,$){
 			}
 			this.container.append(this.prev_btn);
 			this.container.append(this.next_btn);
+
+			
 			this.pics.append(this.pic_list);
 			this.container.append(this.pics);
 			$("body").append(this.container);
@@ -81,15 +84,23 @@ define(["Widget","jquery"],function(w,$){
 				}
 				this.styleList[i]=imgaStyle;
 			};	
-			console.log(this.styleList);
+			return this;
 		},
 		//为Carousel中的元素绑定事件
 		bindUI:function(){
-			// this.container.delegate('.prev_btn','click',this.showPic(picNum-1));
-			// this.container.delegate('.next_btn','click',this.showPic(picNum+1));
+			$('.prev_btn').on('click',{dirFlag:-1,styleList:this.styleList},
+				this.animateBydirection);
+			
+			$('.next_btn').on('click',{dirFlag: 1,styleList:this.styleList},
+				this.animateBydirection);
+			//container hover事件
+			this.container.on('mouseover',this.stopPlay);
+			this.container.on('mouseout' ,this.autoPlay);
+			return this;
 		},
 		//根据偏移量定位css
-		showPic:function(picNum){
+		showPic:function(){
+			var picNum=$('ul.carousel_list').attr('picnum');
 			picNum=picNum%this.config.pics.length;
 			// console.log(picNum);		
 			for (var i =0;i<=this.config.pics.length-1;i++){
@@ -98,29 +109,38 @@ define(["Widget","jquery"],function(w,$){
 			}
 			return this;
 		},
-		animateBydirection:function(dirFlag){
-			for (var i =0;i<=this.config.pics.length - 1;i++) {
-				var item=$('#imgA'+i);
-				// console.log(item);
-				if(dirFlag>0){
-					if(i<this.config.pics.length-1){
-						console.log(this.styleList[i]+'----'+this.styleList[i+1]);
-						item.animate(this.styleList[i+1],500);
-					}
-					else item.animate(this.styleList[0],500);
-				}else if(dirFlag<0){
-					if(i>0){
-						console.log(this.styleList[i]+'---'+this.styleList[i-1]);
-						item.animate(this.styleList[i-1],500);
-					}else item.animate(this.styleList[this.styleList.length-1],500);
-				}
-			}
+		animateBydirection:function(e){
+			if(!animated) return;
+			animated=false;
+			var list=$('.carousel_item');
+			var dirFlag=e.data.dirFlag;
+			var styleList=e.data.styleList;
+			//基位偏移量
+			var picNum=$('ul.carousel_list').attr('picnum');
+			picNum=picNum%styleList.length;
 
+			for (var i=0;i<=list.length-1;i++) {
+				var flagNum=(i+(picNum+dirFlag+styleList.length))%styleList.length;
+				var item=$('#imgA'+i);
+				item.animate(styleList[flagNum],500,function(){
+					animated=true;
+				});
+			}
+			
+			$('ul.carousel_list').attr('picnum',(picNum+dirFlag+styleList.length)%styleList.length);
+
+			return false;
 		},
-		//自动播放******ing******
+		//自动播放
 		autoPlay:function(){
-			setInterval(this.animateBydirection(1),100);
-		}
+			// console.log(this);
+			timer=setInterval(function(){$('.next_btn').click();},2000);
+		},
+		stopPlay:function(){
+			// console.log(this);
+			if(timer) {console.log(timer);window.clearInterval(timer);}
+		},
+
 		
 	});
 

@@ -1,0 +1,50 @@
+/**
+ * written by Xuewa
+ * 2016/08/23
+ */
+*{margin: 0;padding: 0;}
+#picsContainer{
+	overflow: hidden;height: 15em;width:100%;position: relative;
+	/*margin-top:50px; */
+}
+
+#picsContainer>img{
+	position: absolute;
+	width:100%;height: 15em;vertical-align: middle;
+}
+#btns{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+#btns>.pic_btn{
+	width: 0.8em;
+	height: .8em;
+	background-color: #999;
+	border-radius: 5px;
+	display: inline-block;
+	cursor: pointer;
+	border: 1px solid #fff;
+}
+#btns>.on{
+	background-color: orange;
+}
+.mid_btn{
+	position: absolute;
+	opacity: .3;
+	width: 1.12em;
+	/*height: 1.12em;*/
+	background-color: #fff;
+	top: 50%;
+	margin-top:-0.55em;
+	font-size: 2em;
+	text-align: center;
+	color: #111;
+}
+.mid_btn:hover{
+	opacity: .7;
+}
+.Tright{
+	right: 0;
+}

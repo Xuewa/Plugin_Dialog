@@ -14,45 +14,37 @@ define(["jquery"],function($){
 		extend:function(config){
 			this.config=$.extend(this.config,config);
 		},
-		//绑定事件
-		on:function(type,handler){
-			if(typeof this.handlers[type]=='undefined'){
-				this.handlers[type]=[];
-			}
-			this.handlers[type].push(handler);
-			return this;
-		},
-		//触发事件
-		fire:function(type,data){
-			if(typeof this.handlers[type]=='undefined'
-				||this.handlers[type].length==0){
-				return;
-			};
-			if(this.handlers[type] instanceof Array)
-				for (var i = 0;i<=this.handlers[type].length - 1;i++) {
-					this.handlers[type][i](data);
-				};
-		},
+		// //绑定事件
+		// on:function(type,handler){
+		// 	if(typeof this.handlers[type]=='undefined'){
+		// 		this.handlers[type]=[];
+		// 	}
+		// 	this.handlers[type].push(handler);
+		// 	return this;
+		// },
+		// //触发事件
+		// fire:function(type,data){
+		// 	if(typeof this.handlers[type]=='undefined'
+		// 		||this.handlers[type].length==0){
+		// 		return;
+		// 	};
+		// 	if(this.handlers[type] instanceof Array)
+		// 		for (var i = 0;i<=this.handlers[type].length - 1;i++) {
+		// 			this.handlers[type][i](data);
+		// 		};
+		// },
+		//初始化UI
 		render:function(){
 			this.renderUI();
 			this.handlers={};
 			this.bindUI();
-			//先注册好show和hide方法
-			this.on('show',function(){
-				this.container.show();
-			});
-			this.on('hide',function(){
-				this.container.hide();
-			});
 			return this;
 		},
-		//删除插件
-		destroy:function(){
-			this.destructor();
-		},
+		//生成UI+css
 		renderUI:function(){},
+		//绑定组件的动画
 		bindUI:function(){},
-		destructor:function(){},
+		// destructor:function(){},
 	};
 
 	//返回是对象
