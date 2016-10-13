@@ -5,7 +5,7 @@
 define(["jquery"],function($){
 	function Widget(config){
 		this.config=null;
-		this.container=null;
+		// this.container=null;
 		this.extend(config);
 	}
 
@@ -44,6 +44,10 @@ define(["jquery"],function($){
 		renderUI:function(){},
 		//绑定组件的动画
 		bindUI:function(){},
+		//上一张
+		prevFunc:function(){},
+		// 下一张
+		nextFunc:function(){},
 		// destructor:function(){},
 	};
 

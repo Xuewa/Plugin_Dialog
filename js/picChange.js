@@ -15,7 +15,6 @@ define(["Widget","jquery"],function(w,$){
 	PicChange.prototype=$.extend({},new w.Widget(),{
 		/*生成UI */
 		renderUI:function() {
-			//var
 			this.size=this.config.pics.length;
 			this.oldIndex=1;
 			this.index=1;
@@ -55,23 +54,11 @@ define(["Widget","jquery"],function(w,$){
 		},
 		// 为Carousel中的元素绑定事件
 		bindUI:function(){
-			//prev
 			var _this=this;
-			this.prev_btn.on('click',
-				function(){
-					if(!_this.animated) return;
-					_this.index--;
-					_this.animateByIndex();
-				}
-			);
+			//prev
+			this.prev_btn.on('click',{global:this},this.prevFunc);
 			//next
-			this.next_btn.on('click',
-				function(){
-					if(!_this.animated) return;
-					_this.index++;
-					_this.animateByIndex();
-				}
-			);
+			this.next_btn.on('click',{global:this},this.nextFunc);
 			//滑动屏幕
 			this.container.on("touchstart",{global:this},this.touchStart);
 			this.container.on("touchmove",this.touchMove);
@@ -89,6 +76,18 @@ define(["Widget","jquery"],function(w,$){
 				});
 				
 			}
+		},
+		prevFunc:function(e){
+			var _this=e.data.global;
+			if(!_this.animated) return;
+			_this.index--;
+			_this.animateByIndex();
+		},
+		nextFunc:function(e){
+			var _this=e.data.global;
+			if(!_this.animated) return;
+			_this.index++;
+			_this.animateByIndex();
 		},
 		// /*动画:use setTimeout 递归调用*/
 		// animateByIdx:function(){
@@ -198,13 +197,11 @@ define(["Widget","jquery"],function(w,$){
 				// 必须先停掉timmer
 				e.data.global.stopPlay();
 				e.data.global.index++;
-				// e.data.global.next_btn.click();
 			}else if(this._endX-this._startX<-10&&this._endX>0){
 				console.log(this._startX+'---'+this._endX+'--left');
 				// 必须先停掉timmer
 				e.data.global.stopPlay();
 				e.data.global.index--;
-				// e.data.global.prev_btn.click();
 			}
 			// console.log(event);
 			e.data.global.animateByIndex();
